@@ -14,8 +14,8 @@ const initialState = {
 // async get items
 export const getIFetchtemBySingleUser = createAsyncThunk(
     "itemSlice/fetchItems",
-    async () => {
-        const items = await getItemAPI();
+    async (formData) => {
+        const items = await getItemAPI(formData);
         return items;
     }
 );

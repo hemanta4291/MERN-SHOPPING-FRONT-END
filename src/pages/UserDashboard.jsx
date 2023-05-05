@@ -12,6 +12,7 @@ import GlobalModal from '../components/GlobalModal';
 const UserDashboard = () => {
   const dispatch = useDispatch()
   const isLogin = useAuth()
+  const [search,setSearch] = useState('')
   const [modalIsOpen, setIsOpen] =useState(false);
   const [name,setName] = useState('')
   const [editMode,setEditMode] = useState(null)
@@ -33,7 +34,7 @@ const UserDashboard = () => {
 
   useEffect(()=>{
     if(isLogin){
-      dispatch(getIFetchtemBySingleUser())
+      dispatch(getIFetchtemBySingleUser({search}))
     }
   },[isLogin])
 
@@ -79,6 +80,14 @@ const UserDashboard = () => {
   const handleDeleteRowData = (e,data) =>{
     dispatch(deleteItemBySingleUser(data._id))
   }
+
+
+  // search handler
+
+  const searchHandler = (e) =>{
+    setSearch(e.target.value)
+    dispatch(getIFetchtemBySingleUser({search:e.target.value}))
+  }
   
   
 
@@ -112,7 +121,7 @@ const UserDashboard = () => {
     <div className='container mx-auto'>
           <div className='flex justify-between mt-6 mb-6' >
             <h2 className='text-2xl font-bold'>All Items</h2>
-            <input className='border rounded-3xl py-3 px-6 w-4/12' placeholder='search' />
+            <input value={search} onChange={searchHandler} className='border rounded-3xl py-3 px-6 w-4/12' placeholder='search' />
             <button onClick={openModal} type='button' className='bg-green-600 text-white rounded-3xl py-2 px-6 text-base font-bold border-2'>
             Add Product
           </button>

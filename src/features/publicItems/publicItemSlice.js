@@ -11,8 +11,8 @@ const initialState = {
 // async thunk
 export const getIFetchtems = createAsyncThunk(
     "publicItems/fetchPublicItems",
-    async () => {
-        const user = await getPublicItem();
+    async (fromData) => {
+        const user = await getPublicItem(fromData);
         return user;
     }
 );

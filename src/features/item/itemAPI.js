@@ -3,9 +3,10 @@ import axios from '../../utils/axiosInstance';
 
 
 // show items
-export const getItemAPI = async () => {
+export const getItemAPI = async (formData) => {
     try{
-        const response = await axios.get("/item/single-all");
+        const {search} = formData
+        const response = await axios.get(`/item/single-all?search=${search}`);
         return response.data;
     }
     catch (error) {
