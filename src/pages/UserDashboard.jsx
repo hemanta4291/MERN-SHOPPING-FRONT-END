@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { createItemBySingleUser, deleteItemBySingleUser, getIFetchtemBySingleUser, updateItemBySingleUser } from '../features/item/itemSlice';
 import useAuth from '../hooks/useAuth';
@@ -78,7 +79,20 @@ const UserDashboard = () => {
 
   // delete item
   const handleDeleteRowData = (e,data) =>{
-    dispatch(deleteItemBySingleUser(data._id))
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteItemBySingleUser(data._id))
+      }
+    })
+    
   }
 
 
@@ -155,7 +169,7 @@ const UserDashboard = () => {
             </div>
             <div className='flex justify-between border-t pt-6  px-5'>
             <button type="button" className='bg-red-700 rounded-md text-white px-4 py-2' onClick={closeModal}>Close</button>
-            <button  className='bg-green-600 rounded-md text-white px-4 py-2' type='submit'>{editMode ? "Edit" : "Add"}</button>
+            <button  className='bg-green-600 rounded-md text-white px-4 py-2' type='submit'>{editMode ? "Update" : "Add"}</button>
             </div>
           </form>
     </GlobalModal>

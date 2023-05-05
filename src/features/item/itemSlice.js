@@ -57,7 +57,6 @@ const itemSlice = createSlice({
                 state.isError = false;
                 state.isLoading = true;
                 state.message=''
-                console.log('create.........')
             })
             .addCase(createItemBySingleUser.fulfilled, (state, action) => {
                 state.isLoading = false;
@@ -78,21 +77,17 @@ const itemSlice = createSlice({
             .addCase(updateItemBySingleUser.pending, (state) => {
                 state.isLoading = true;
                 state.message=''
-                console.log('update.........')
             })
             .addCase(updateItemBySingleUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isModal = false,
                 state.isError = false
-                state.items = state.items.map((item)=>{
-                    if(item._id === action.payload.data._id){
-                        return {
-                            ...item,
-                            name: action.payload.data.name
-                        }
-                    }
-                    return item
-                })
+                const indexToUpdate = state.items.findIndex(
+                    (item) => item._id === action.payload.data._id
+                );
+
+                state.items[indexToUpdate].name = action.payload.data.name;
+
                 state.message = action.payload.message
                 toast(action.payload.message,{autoClose:1000})
             })
@@ -108,7 +103,6 @@ const itemSlice = createSlice({
                 state.isError = false;
                 state.isLoading = true;
                 state.message=''
-                console.log('fatching.........')
             })
             .addCase(getIFetchtemBySingleUser.fulfilled, (state, action) => {
                 state.isLoading = false;
@@ -125,12 +119,13 @@ const itemSlice = createSlice({
                 state.isError = false;
                 state.isLoading = true;
                 state.message=''
-                console.log('delte.........')
+               
             })
             .addCase(deleteItemBySingleUser.fulfilled, (state, action) => {
                 state.items = state.items.filter((item)=>item._id !== action.payload.data._id)
                 state.isLoading = false;
                 state.message = action.payload.message
+                toast(action.payload.message,{autoClose:1000})
             })
             .addCase(deleteItemBySingleUser.rejected, (state, action) => {
                 state.isLoading = false;

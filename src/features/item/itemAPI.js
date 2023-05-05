@@ -46,7 +46,14 @@ export const updateItemAPI = async ({id,name}) => {
 
 
 export const deleteItemAPI = async (id) => {
-    const response = await axios.delete(`/item/delete/${id}`);
 
-    return response.data;
+    try{
+        const response = await axios.delete(`/item/delete/${id}`);
+
+        return response.data;
+    }
+    catch (error) {
+        throw error.response.data
+    }
+   
 };
