@@ -5,6 +5,7 @@ import { createItemBySingleUser, deleteItemBySingleUser, getIFetchtemBySingleUse
 import useAuth from '../hooks/useAuth';
 import DataTable from 'react-data-table-component';
 import GlobalModal from '../components/GlobalModal';
+import UserData from '../components/UserData';
 
 
 
@@ -19,6 +20,7 @@ const UserDashboard = () => {
   const [editMode,setEditMode] = useState(null)
   const [editName,setEditName] = useState('')
   const allitems = useSelector((state) => state.userItems);
+
   const { isModal, isLoading,isError,error,items:data,message} = allitems || {}
  
   
@@ -52,6 +54,9 @@ const UserDashboard = () => {
     }
 
   },[allitems,isModal])
+
+
+  
 
 
 
@@ -130,6 +135,9 @@ const UserDashboard = () => {
       )
     }
   ]
+
+
+
   return (
     <>
     <div className='container mx-auto'>
@@ -150,6 +158,9 @@ const UserDashboard = () => {
           progressPending={isLoading}
           // progressComponent={<GlobalLoading imgSize="large" />}
         />
+
+      <UserData/>
+        
         
 
 

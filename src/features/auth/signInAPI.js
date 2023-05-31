@@ -11,5 +11,5 @@ export const signInUser = async (formData) => {
     }
     catch (error) {
         throw error.response.data
-}
+    }
 };

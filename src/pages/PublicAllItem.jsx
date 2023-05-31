@@ -4,6 +4,7 @@ import DataTable from 'react-data-table-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPublicItem } from '../features/publicItems/publicItemAPI';
 import { getIFetchtems } from '../features/publicItems/publicItemSlice';
+import { getIFetchPdf } from '../features/pdf/pdfSlice';
 
 const PublicAllItem = () => {
   const dispatch = useDispatch()
@@ -15,10 +16,24 @@ const PublicAllItem = () => {
   },[])
 
 
-  const searchHandler = (e) =>{
-    console.log(e.target.value)
-    setSearch(e.target.value)
-    dispatch(getIFetchtems({search:e.target.value}))
+  const searchHandler = (value) =>{
+    // console.log(e.target.value)
+    // setSearch(e.target.value)
+    dispatch(getIFetchtems({search:value}))
+  }
+
+  useEffect(()=>{
+    const getData = setTimeout(() => {
+      searchHandler(search)
+    }, 500)
+
+    return () => clearTimeout(getData)
+  },[search])
+
+
+  // generate pdf
+  const generatePdf = () =>{
+    dispatch(getIFetchPdf())
   }
 
   const columns = [
@@ -40,9 +55,12 @@ const PublicAllItem = () => {
 
   return (
     <div className='container mx-auto'>
+         <button onClick={generatePdf} className='bg-green-100 mt-8 rounded-3xl py-2 px-6 text-base font-bold border-2'>
+            Download Pdf
+          </button>
           <div className='flex justify-between mt-6 mb-6' >
             <h2 className='text-2xl font-bold'>All Items</h2>
-            <input  value={search} onChange={(e)=>searchHandler(e)} className='border rounded-3xl py-3 px-6' placeholder='search' />
+            <input  value={search} onChange={(e)=>setSearch(e.target.value)} className='border rounded-3xl py-3 px-6' placeholder='search' />
           </div>
 
           {/* data table */}

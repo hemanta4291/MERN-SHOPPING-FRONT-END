@@ -11,6 +11,8 @@ import UserDashboard from './pages/UserDashboard';
 import PrivateRoute from './Layout/PrivateRoute';
 import PublicRoute from './Layout/PublicRoute ';
 import Modal from 'react-modal';
+import PdfCreate from './pages/PdfCreate';
+import UserEdit from './pages/UserEdit';
 
 Modal.setAppElement('#root');
 
@@ -37,9 +39,14 @@ function App() {
             </PublicRoute>} />
           <Route element={<DashboardLayout />}>
             <Route path='/' element={<PublicRoute><PublicAllItem /></PublicRoute>} />
-            <Route path='/user-dashboard' element={<PrivateRoute>
+            <Route path='/pdf' element={<PublicRoute><PdfCreate/></PublicRoute>} />
+            <Route path='/user-dashboard' >
+              <Route path='' element={<PrivateRoute> <UserDashboard /> </PrivateRoute>} />
+              <Route path='edit/:id' element={<PrivateRoute> <UserEdit /> </PrivateRoute>} />
+            </Route>
+            {/* <Route path='/edit/:id' element={<PrivateRoute>
               <UserDashboard />
-            </PrivateRoute>} />
+            </PrivateRoute>} /> */}
           </Route>
         </Routes>
       </Router>

@@ -6,7 +6,7 @@ import { userLoggedOut } from '../features/auth/signInSlice';
 const Header = () => {
   const dispatch = useDispatch()
   const {user} = useSelector((state) => state.auth);
-  const {name,email} = user || {}
+  const {name,email,role} = user || {}
   const styleRender = user ? "justify-between" : "justify-center"
 
   const logOut = () =>{
@@ -23,6 +23,7 @@ const Header = () => {
             <img className='w-14 h-14 mb-4' src='https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png' />
             <h2 className='text-sm'><span className='font-bold mr-2'>Name : </span> {name}</h2>
             <h3 className='text-sm'><span className='font-bold mr-2'>Email : </span> {email}</h3>
+            <h3 className='text-sm'><span className='font-bold mr-2'>Role : </span> {role}</h3>
           </div>
         }
         {!user && 
